@@ -51,6 +51,8 @@ export const primaryRoutes: AppRouteItem[] = [
     description: "Invite caregivers and manage shared access",
     icon: Users,
   },
+
+  
   {
     title: "Alert Center",
     href: "/alerts",
