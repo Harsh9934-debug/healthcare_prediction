@@ -19,6 +19,7 @@ model User {
 
   accounts                 Account[]
   sessions                 Session[]
+  aiPredictions            AiPrediction[]
 }
 
 model Account {
@@ -54,4 +55,19 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model AiPrediction {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId           String   @db.ObjectId
+  biologicalAge    Float
+  riskLevel        String
+  futurePrediction String?
+  simulation       String?
+  recommendations  String?
+  inputDataJson    String?
+  createdAt        DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([userId, createdAt])
 }

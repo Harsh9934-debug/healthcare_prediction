@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { Sparkles, Loader2, Activity } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Sparkles, Loader2, Activity, TrendingDown } from "lucide-react";
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import {
   Card,
   CardContent,
@@ -21,6 +22,23 @@ export function HealthInsights() {
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
+  const [history, setHistory] = useState<any[]>([]);
+
+  const fetchHistory = async () => {
+    try {
+      const res = await fetch("/api/analyze-health");
+      if (res.ok) {
+        const data = await res.json();
+        setHistory(data);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchHistory();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -50,6 +68,7 @@ export function HealthInsights() {
         throw new Error(data.error || "Failed to analyze health.");
       }
       setResults(data);
+      fetchHistory();
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -180,6 +199,30 @@ export function HealthInsights() {
           )}
           {results && !loading && (
             <div className="space-y-6">
+              {history.length > 1 && (
+                <div className="rounded-3xl border border-border/50 bg-background p-5 mb-2 shadow-sm">
+                  <h4 className="flex items-center gap-2 text-sm font-semibold tracking-tight text-foreground mb-4">
+                    <TrendingDown className="h-5 w-5 text-emerald-500" /> Biological Age Trajectory
+                  </h4>
+                  <div className="h-44 w-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart
+                        data={history.map(h => ({
+                          date: new Date(h.createdAt).toLocaleDateString([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }),
+                          Age: h.biologicalAge
+                        }))}
+                        margin={{ top: 10, right: 10, left: -25, bottom: 0 }}
+                      >
+                        <XAxis dataKey="date" fontSize={12} tickLine={false} axisLine={false} stroke="#888888" />
+                        <YAxis domain={['auto', 'auto']} fontSize={12} tickLine={false} axisLine={false} stroke="#888888" />
+                        <Tooltip contentStyle={{ borderRadius: "12px", border: "1px solid #eaeaea", fontSize: "12px", boxShadow: "0 2px 8px rgba(0,0,0,0.05)" }} />
+                        <Line type="stepAfter" dataKey="Age" stroke="#10b981" strokeWidth={3} dot={{ r: 4, fill: "#10b981", strokeWidth: 2, stroke: "#fff" }} activeDot={{ r: 6, strokeWidth: 0 }} />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+              )}
+
               <div className="grid grid-cols-2 gap-4">
                 <div className="rounded-2xl border border-border/50 bg-background/50 p-4 text-center">
                   <p className="text-xs uppercase text-muted-foreground font-semibold">Biological Age</p>

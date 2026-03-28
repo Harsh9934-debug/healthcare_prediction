@@ -12,9 +12,9 @@ Stress: ${stressLevel}/10
 ### LOGIC CONSTRAINTS:
 1. THE MIRROR (Biological Age): Use the input to calculate a biological age by mathematically scaling extreme habits[cite: 57]. 
    - Baseline is chronological age.
-   - Sleep Penalties: Add +0.5 years for EVERY hour below 7 (e.g., 3 hours = 4 hours deficit = +2.0 years).
-   - Stress Penalties: Add +0.5 years for EVERY point above 5 (e.g., 10 stress = 5 points over = +2.5 years).
-   - Activity Bonuses/Penalties: -1 year for steps > 8,000; -0.5 years for daily exercise > 30 mins. Add +0.5 years penalty for every 2000 steps below 6000.
+   - Sleep Penalties: Add +2.5 years penalty for EVERY hour of sleep below 7 (e.g., 2 hours = 5 hours deficit = +12.5 years).
+   - Stress Penalties: Add +1.5 years penalty for EVERY stress point above 5 (e.g., 10 stress = 5 points over = +7.5 years).
+   - Activity Bonuses/Penalties: -1 year for steps > 8,000; -0.5 years for daily exercise > 30 mins. Add +1.5 years penalty for every 1000 steps below 5000.
 2. THE TIME MACHINE (2040 Projection): Predict health status in 2040 if current habits persist[cite: 59, 77]. 
 3. THE GROWTH SIMULATION: Identify ONE habit to change (e.g., +1 hour sleep). Recalculate the 2040 projection to show a "Reduced Risk"[cite: 52, 80].
 4. THE COACH: Provide 3 'Micro-Commitments' that are clear, actionable, and personal[cite: 61, 83].
@@ -22,7 +22,7 @@ Stress: ${stressLevel}/10
 ### OUTPUT FORMAT (JSON ONLY):
 {
   "biological_age": number,
-  "age_summary": "Short 1-line explanation of why (e.g., '+2 years due to high stress')",
+  "age_summary": "A transparent mathematical breakdown explaining exactly how the biological age was calculated based on the precise penalties (e.g., 'Baseline: 30 + 12.5 yrs (5h sleep deficit) + 7.5 yrs (5 stress points over baseline) + 7.5 yrs (step deficit) = 57.5 Biological Years')",
   "the_down_2040": "A vivid, cautionary 2-sentence description of health risks if habits don't change",
   "the_growth_2040": "A vivid, inspiring 2-sentence description of the future after 1 habit change",
   "improvement_impact": "Percentage reduction in long-term heart/metabolic risk",
