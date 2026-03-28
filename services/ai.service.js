@@ -22,7 +22,7 @@ Stress: ${stressLevel}/10
 ### OUTPUT FORMAT (JSON ONLY):
 {
   "biological_age": number,
-  "age_summary": "A transparent mathematical breakdown explaining exactly how the biological age was calculated based on the precise penalties (e.g., 'Baseline: 30 + 12.5 yrs (5h sleep deficit) + 7.5 yrs (5 stress points over baseline) + 7.5 yrs (step deficit) = 57.5 Biological Years')",
+  "age_summary": "A clear, empathetic medical explanation describing exactly WHY the biological age is elevated, focusing on the physiological breakdown caused by their worst habits (e.g., 'Your massive sleep deficit prevents critical cellular repair, while unchecked core stress accelerates tissue inflammation. Together, these force your biological clock to age 27 years faster than normal.')",
   "the_down_2040": "A vivid, cautionary 2-sentence description of health risks if habits don't change",
   "the_growth_2040": "A vivid, inspiring 2-sentence description of the future after 1 habit change",
   "improvement_impact": "Percentage reduction in long-term heart/metabolic risk",

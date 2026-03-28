@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Sparkles, Loader2, Activity, TrendingDown } from "lucide-react";
+import { Sparkles, Loader2, Activity, TrendingDown, Share2 } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import {
   Card,
@@ -80,6 +80,13 @@ export function HealthInsights() {
     if (level === "High") return "text-rose-500";
     if (level === "Medium") return "text-amber-500";
     return "text-emerald-500";
+  };
+
+  const handleWhatsAppShare = () => {
+    if (!results) return;
+    const text = `GoodAI Longevity Coach \n\nMy Biological Age: ${results.biologicalAge}\nRisk Level: ${results.riskLevel}\n\nMy Action Plan:\n${results.recommendations.trim()}\n\nGenerated via AI Longevity Dashboard`;
+    const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+    window.open(url, "_blank");
   };
 
   return (
@@ -258,6 +265,14 @@ export function HealthInsights() {
                   {results.recommendations}
                 </p>
               </div>
+
+              <button
+                onClick={handleWhatsAppShare}
+                className="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl bg-[#25D366] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#20bd5a]"
+              >
+                <Share2 className="h-4 w-4" />
+                Share to WhatsApp
+              </button>
             </div>
           )}
         </CardContent>
