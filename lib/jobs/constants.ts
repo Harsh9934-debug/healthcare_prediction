@@ -1,0 +1,25 @@
+import { JOB_NAMES, QUEUE_NAMES } from "@/lib/jobs/contracts";
+
+export const DEFAULT_JOB_DASHBOARD_LIMIT = 20;
+export const JOB_BACKOFF_DELAY_MS = 10_000;
+
+export const JOB_QUEUE_NAMES = {
+  ALERT_EVALUATION: QUEUE_NAMES.alerts,
+  REMINDER_GENERATION: QUEUE_NAMES.reminders,
+  DAILY_HEALTH_SUMMARY: QUEUE_NAMES.dailySummary,
+  DEVICE_SYNC_PROCESSING: QUEUE_NAMES.deviceSync,
+} as const;
+
+export const JOB_NAME_BY_KIND = {
+  ALERT_EVALUATION: JOB_NAMES.alertEvaluation,
+  REMINDER_GENERATION: JOB_NAMES.reminderGeneration,
+  DAILY_HEALTH_SUMMARY: JOB_NAMES.dailyHealthSummary,
+  DEVICE_SYNC_PROCESSING: JOB_NAMES.deviceSyncProcessing,
+} as const;
+
+export const JOB_ATTEMPTS_BY_KIND = {
+  ALERT_EVALUATION: 3,
+  REMINDER_GENERATION: 3,
+  DAILY_HEALTH_SUMMARY: 3,
+  DEVICE_SYNC_PROCESSING: 3,
+} as const;
