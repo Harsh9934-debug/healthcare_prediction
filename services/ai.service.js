@@ -10,10 +10,11 @@ Exercise: ${exerciseMinutes} mins
 Stress: ${stressLevel}/10
 
 ### LOGIC CONSTRAINTS:
-1. THE MIRROR (Biological Age): Use the input to calculate a biological age[cite: 57]. 
+1. THE MIRROR (Biological Age): Use the input to calculate a biological age by mathematically scaling extreme habits[cite: 57]. 
    - Baseline is chronological age.
-   - Penalties: +1.5 years for sleep < 7h; +2 years for 'High' stress[cite: 92] (Stress >= 7).
-   - Bonuses: -1 year for steps > 8,000; -0.5 years for daily exercise > 30 mins.
+   - Sleep Penalties: Add +0.5 years for EVERY hour below 7 (e.g., 3 hours = 4 hours deficit = +2.0 years).
+   - Stress Penalties: Add +0.5 years for EVERY point above 5 (e.g., 10 stress = 5 points over = +2.5 years).
+   - Activity Bonuses/Penalties: -1 year for steps > 8,000; -0.5 years for daily exercise > 30 mins. Add +0.5 years penalty for every 2000 steps below 6000.
 2. THE TIME MACHINE (2040 Projection): Predict health status in 2040 if current habits persist[cite: 59, 77]. 
 3. THE GROWTH SIMULATION: Identify ONE habit to change (e.g., +1 hour sleep). Recalculate the 2040 projection to show a "Reduced Risk"[cite: 52, 80].
 4. THE COACH: Provide 3 'Micro-Commitments' that are clear, actionable, and personal[cite: 61, 83].

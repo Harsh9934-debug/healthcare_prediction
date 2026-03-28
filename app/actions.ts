@@ -63,11 +63,6 @@ export async function signupAction(
       name: parsed.data.name.trim(),
       email,
       passwordHash,
-      healthProfile: {
-        create: {
-          fullName: parsed.data.name.trim(),
-        },
-      },
     },
   });
 
