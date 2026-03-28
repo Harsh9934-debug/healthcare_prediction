@@ -359,9 +359,7 @@ export function AppShell({ children }: AppShellProps) {
                 </div>
               </div>
 
-              <div className="text-xs font-medium text-muted-foreground bg-secondary/50 px-3 py-1.5 rounded-full border border-border/50 shadow-sm">
-                Next-Generation Longevity AI • Live Prediction Engine
-              </div>
+
             </div>
           </div>
 
