@@ -1,58 +1,52 @@
+// @ts-nocheck
 import { NextRequest, NextResponse } from "next/server";
-import { runPrediction } from "@/lib/services/prediction.service";
-import { runSimulation } from "@/lib/services/simulation.service";
-import { generateRecommendation } from "@/lib/services/ai.service";
+import { calculatePrediction } from "../../../services/prediction.service";
+import { generateAiInsights } from "../../../services/ai.service";
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { age, sleep, steps, heartRate } = body;
+    const { age, sleepHours, stepsPerDay, exerciseMinutes, stressLevel } = body;
 
-    // --- Input validation ---
     if (
-      typeof age !== "number" || age < 1 || age > 120 ||
-      typeof sleep !== "number" || sleep < 0 || sleep > 24 ||
-      typeof steps !== "number" || steps < 0
+      typeof age !== "number" ||
+      typeof sleepHours !== "number" ||
+      typeof stepsPerDay !== "number" ||
+      typeof exerciseMinutes !== "number" ||
+      typeof stressLevel !== "number"
     ) {
       return NextResponse.json(
-        { error: "Invalid input. age (1–120), sleep (0–24), steps (≥0) are required numbers." },
+        { error: "Invalid input. age, sleepHours, stepsPerDay, exerciseMinutes, stressLevel are required numbers." },
         { status: 400 }
       );
     }
 
-    const input = {
+    // Prediction (Mirror + Predictor)
+    const predictionObj = calculatePrediction({
       age,
-      sleep,
-      steps,
-      heartRate: typeof heartRate === "number" ? heartRate : undefined,
-    };
-
-    // --- Run prediction pipeline ---
-    const prediction = runPrediction(input);
-    const simulation = runSimulation(input, prediction.riskScore);
-    const recommendations = generateRecommendation(input, {
-      biologicalAge: prediction.biologicalAge,
-      ageDelta: prediction.ageDelta,
-      riskLevel: prediction.riskLevel,
-      sleepDeficit: sleep < 7,
-      activityDeficit: steps < 8000,
-      heartRateHigh: (heartRate ?? 0) > 80,
+      sleepHours,
+      stepsPerDay,
+      stressLevel,
     });
 
-    const response = {
-      biologicalAge: prediction.biologicalAge,
-      ageDelta: prediction.ageDelta,
-      riskLevel: prediction.riskLevel,
-      riskScore: prediction.riskScore,
-      futurePrediction: prediction.futurePrediction,
-      simulation: simulation.summary,
-      simulationScenarios: simulation.scenarios,
-      recommendations,
-    };
+    // AI logic (Time Machine + Coach)
+    const aiInsights = await generateAiInsights({
+      age,
+      sleepHours,
+      stepsPerDay,
+      exerciseMinutes,
+      stressLevel,
+    });
 
-    return NextResponse.json(response);
+    return NextResponse.json({
+      biologicalAge: predictionObj.biologicalAge,
+      riskLevel: predictionObj.riskLevel,
+      futurePrediction: predictionObj.futurePrediction,
+      simulation: aiInsights.simulation,
+      recommendations: aiInsights.recommendations,
+    });
   } catch (err) {
-    console.error("[analyze-health]", err);
+    console.error("[analyze-health api] Error:", err);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

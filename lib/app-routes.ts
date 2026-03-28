@@ -1,23 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import {
-  Activity,
-  BellRing,
-  CalendarClock,
-  ClipboardList,
-  Dna,
-  FileBarChart2,
-  FileHeart,
-  HeartPulse,
-  LayoutDashboard,
-  Pill,
-  ShieldPlus,
-  Smartphone,
-  Sparkles,
-  Stethoscope,
-  Syringe,
-  Users,
-  Workflow,
-} from "lucide-react";
+import { Sparkles } from "lucide-react";
 
 export type AppRouteItem = {
   title: string;
@@ -28,122 +10,11 @@ export type AppRouteItem = {
 
 export const primaryRoutes: AppRouteItem[] = [
   {
-    title: "Dashboard",
+    title: "AI Longevity Dashboard",
     href: "/dashboard",
-    description: "Command center for your health workspace",
-    icon: LayoutDashboard,
-  },
-  {
-    title: "AI Insights",
-    href: "/ai-insights",
-    description: "Generate concise summaries from your records",
+    description: "Biological age, risk prediction & habit simulation",
     icon: Sparkles,
   },
-  {
-    title: "AI Longevity Lab",
-    href: "/longevity",
-    description: "Biological age, risk prediction & habit simulation",
-    icon: Dna,
-  },
-  {
-    title: "Care Team",
-    href: "/care-team",
-    description: "Invite caregivers and manage shared access",
-    icon: Users,
-  },
-
-  
-  {
-    title: "Alert Center",
-    href: "/alerts",
-    description: "Foundational alert view for future monitoring",
-    icon: BellRing,
-  },
-  {
-    title: "Device Connections",
-    href: "/device-connection",
-    description: "Integration roadmap for phone and health devices",
-    icon: Smartphone,
-  },
-  {
-    title: "Health Profile",
-    href: "/health-profile",
-    description: "Profile, allergies, conditions, emergency contacts",
-    icon: FileHeart,
-  },
-  {
-    title: "Medications",
-    href: "/medications",
-    description: "Schedules, adherence logs, and reminders",
-    icon: Pill,
-  },
-  {
-    title: "Appointments",
-    href: "/appointments",
-    description: "Visits, follow-ups, doctors, and notes",
-    icon: CalendarClock,
-  },
-  {
-    title: "Lab Results",
-    href: "/labs",
-    description: "Results, abnormal flags, and uploads",
-    icon: ClipboardList,
-  },
-  {
-    title: "Vitals",
-    href: "/vitals",
-    description: "BP, sugar, oxygen, weight, and trends",
-    icon: HeartPulse,
-  },
-  {
-    title: "Symptoms",
-    href: "/symptoms",
-    description: "Symptom journal and severity history",
-    icon: Activity,
-  },
-  {
-    title: "Vaccinations",
-    href: "/vaccinations",
-    description: "Dose history and next due tracking",
-    icon: Syringe,
-  },
-  {
-    title: "Documents",
-    href: "/documents",
-    description: "Medical files, scans, and uploads",
-    icon: ShieldPlus,
-  },
-  {
-    title: "Doctors",
-    href: "/doctors",
-    description: "Clinics, contacts, and directory",
-    icon: Stethoscope,
-  },
-  {
-    title: "Summary",
-    href: "/summary",
-    description: "Printable patient summary view",
-    icon: FileBarChart2,
-  },
-  {
-  title: "Reminders",
-  href: "/reminders",
-  description: "In-app reminder center for due and overdue tasks",
-  icon: BellRing,
-},
 ];
 
-export const utilityRoutes: AppRouteItem[] = [
-  {
-    title: "Exports",
-    href: "/exports",
-    description: "Export records and reports",
-    icon: FileBarChart2,
-  },
-  {
-    title: "Jobs",
-    href: "/jobs",
-    description: "Inspect worker queues, retries, and job runs",
-    icon: Workflow,
-  },
-];
+export const utilityRoutes: AppRouteItem[] = [];

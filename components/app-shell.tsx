@@ -144,43 +144,10 @@ export function AppShell({ children }: AppShellProps) {
   }, []);
 
   const groups = useMemo(() => {
-    const pick = (hrefs: string[]) =>
-      hrefs.map((h) => routeMap.get(h)).filter(Boolean) as AppRouteItem[];
-
-    const overview = pick(["/dashboard"]);
-    const collaboration = pick([
-      "/ai-insights",
-      "/longevity",
-      "/care-team",
-      "/alerts",
-      "/device-connections",
-    ]);
-
-    const records = primaryRoutes.filter(
-      (r) =>
-        ![
-          "/dashboard",
-          "/ai-insights",
-          "/longevity",
-          "/care-team",
-          "/alerts",
-          "/device-connections",
-          "/summary",
-        ].includes(r.href)
-    ) as AppRouteItem[];
-
-    const utilities = pick([
-      "/summary",
-      ...utilityRoutes.map((r) => r.href),
-    ]);
-
     return [
-      { label: "Overview", items: overview },
-      { label: "Flagship", items: collaboration },
-      { label: "Records", items: records },
-      { label: "Utilities", items: utilities },
+      { label: "Overview", items: primaryRoutes },
     ];
-  }, [routeMap]);
+  }, []);
 
   const Sidebar = ({
     collapsed = false,
@@ -392,8 +359,8 @@ export function AppShell({ children }: AppShellProps) {
                 </div>
               </div>
 
-              <div className="text-xs text-muted-foreground">
-                Premium healthcare SaaS shell • Dark mode supported
+              <div className="text-xs font-medium text-muted-foreground bg-secondary/50 px-3 py-1.5 rounded-full border border-border/50 shadow-sm">
+                Next-Generation Longevity AI • Live Prediction Engine
               </div>
             </div>
           </div>
