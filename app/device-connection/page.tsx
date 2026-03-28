@@ -142,7 +142,7 @@ export default function DeviceConnectionsPage() {
       <div className="mx-auto max-w-7xl space-y-6 p-6">
         <PageHeader
           title="Device Connections"
-          description="A sponsor-friendly integration roadmap showing how VitaVault can grow into phone-linked and device-assisted health monitoring without overstating current capabilities."
+          description="A sponsor-friendly integration roadmap showing how Health can grow into phone-linked and device-assisted health monitoring without overstating current capabilities."
           action={
             <Link
               href="/alerts"

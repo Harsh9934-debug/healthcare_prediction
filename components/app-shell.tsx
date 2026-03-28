@@ -27,7 +27,8 @@ type AppShellProps = {
   children: React.ReactNode;
 };
 
-const SIDEBAR_STORAGE_KEY = "vitavault-sidebar-collapsed";
+const SIDEBAR_STORAGE_KEY = "health-sidebar-collapsed";
+
 
 function navItemClasses(active: boolean, collapsed: boolean) {
   return cn(
@@ -133,7 +134,7 @@ export function AppShell({ children }: AppShellProps) {
     return (
       all.find(
         (item) => pathname === item.href || pathname.startsWith(`${item.href}/`)
-      )?.title ?? "VitaVault"
+      )?.title ?? "Health"
     );
   }, [pathname]);
 
@@ -218,7 +219,7 @@ export function AppShell({ children }: AppShellProps) {
                     className="min-w-0"
                   >
                     <p className="truncate text-base font-semibold tracking-tight">
-                      VitaVault
+                      Health
                     </p>
                     <p className="truncate text-xs text-muted-foreground">
                       Patient workspace
@@ -421,7 +422,7 @@ export function AppShell({ children }: AppShellProps) {
 
             <div className="min-w-0 text-center">
               <p className="truncate text-sm font-semibold">{activeTitle}</p>
-              <p className="truncate text-xs text-muted-foreground">VitaVault</p>
+              <p className="truncate text-xs text-muted-foreground">Health</p>
             </div>
 
             <button

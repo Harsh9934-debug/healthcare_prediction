@@ -13,7 +13,7 @@ function Logo() {
       <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-3xl bg-primary/10 text-primary">
         <span className="text-xl font-bold">V</span>
       </div>
-      <p className="mt-3 text-lg font-semibold tracking-tight">VitaVault</p>
+      <p className="mt-3 text-lg font-semibold tracking-tight">Health</p>
       <p className="text-sm text-muted-foreground">Personal Health Record Companion</p>
     </div>
   );

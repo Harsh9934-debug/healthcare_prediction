@@ -223,7 +223,7 @@ export default function LongevityPage() {
           action={
             <div className="flex items-center gap-2 rounded-2xl border border-border/60 bg-background/60 px-3 py-2">
               <Sparkles className="h-4 w-4 text-primary" />
-              <span className="text-xs font-medium">AI for Longevity · VitaVault</span>
+              <span className="text-xs font-medium">AI for Longevity · Health</span>
             </div>
           }
         />

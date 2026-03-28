@@ -1,5 +1,5 @@
 name: Bug report
-description: Report a bug in VitaVault
+description: Report a bug in Health
 title: "[Bug] "
 labels: ["bug"]
 body:

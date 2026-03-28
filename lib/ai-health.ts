@@ -297,7 +297,7 @@ function buildFallbackInsight(context: Awaited<ReturnType<typeof buildPatientIns
     title: "Demo health insight",
     summary:
       `This is a locally generated fallback summary for ${patientName}. ` +
-      `VitaVault reviewed medications, appointments, labs, vitals, and symptoms already stored in the database. ` +
+      `Health reviewed medications, appointments, labs, vitals, and symptoms already stored in the database. ` +
       `The current focus should be medication consistency, reviewing any abnormal lab or vital trends, and preparing follow-up questions for the next consultation.`,
     adherenceRisk,
     trendFlags,
@@ -371,7 +371,7 @@ export async function generatePatientHealthInsight(args: {
     const response = await openai.responses.create({
       model: OPENAI_MODEL,
       instructions: [
-        "You are VitaVault Care Insight, an informational healthcare assistant.",
+        "You are Health Care Insight, an informational healthcare assistant.",
         "You are NOT diagnosing, prescribing, replacing a doctor, or issuing emergency triage decisions.",
         "Use only the structured patient data provided.",
         "Give concise, practical, non-diagnostic observations.",
@@ -383,7 +383,7 @@ export async function generatePatientHealthInsight(args: {
       text: {
         format: {
           type: "json_schema",
-          name: "vitavault_patient_insight",
+          name: "health_patient_insight",
           strict: true,
           schema: insightSchema,
         },

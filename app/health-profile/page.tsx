@@ -129,7 +129,7 @@ export default async function HealthProfilePage() {
                 </div>
 
                 <p className="mt-4 max-w-2xl text-sm text-muted-foreground">
-                  This page anchors the rest of the VitaVault experience. Better baseline data improves summaries,
+                  This page anchors the rest of the Health experience. Better baseline data improves summaries,
                   sharing context, exports, and future device-linked trends.
                 </p>
               </div>
@@ -268,7 +268,7 @@ export default async function HealthProfilePage() {
                     </div>
 
                     <div className="rounded-2xl border border-border/60 bg-background/40 p-4 md:col-span-2">
-                      <p className="text-sm font-medium">Future use in VitaVault</p>
+                      <p className="text-sm font-medium">Future use in Health</p>
                       <p className="mt-1 text-sm text-muted-foreground">
                         This section becomes more valuable later when Android Health Connect, smart scales,
                         and home vital devices begin syncing into the record.

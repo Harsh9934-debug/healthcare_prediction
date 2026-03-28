@@ -2,7 +2,7 @@ import IORedis from "ioredis";
 
 declare global {
   // eslint-disable-next-line no-var
-  var vitavaultBullRedis: IORedis | undefined;
+  var healthBullRedis: IORedis | undefined;
 }
 
 function createRedisConnection() {
@@ -19,8 +19,8 @@ function createRedisConnection() {
 }
 
 export const bullmqConnection =
-  globalThis.vitavaultBullRedis ?? createRedisConnection();
+  globalThis.healthBullRedis ?? createRedisConnection();
 
 if (process.env.NODE_ENV !== "production") {
-  globalThis.vitavaultBullRedis = bullmqConnection;
+  globalThis.healthBullRedis = bullmqConnection;
 }

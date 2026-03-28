@@ -64,7 +64,7 @@ export default async function AiInsightsPage({
       <div className="mx-auto max-w-7xl space-y-6 p-6">
         <PageHeader
           title="AI Insights"
-          description="Generate patient-friendly summaries, trend flags, and follow-up talking points from the records already stored in VitaVault."
+          description="Generate patient-friendly summaries, trend flags, and follow-up talking points from the records already stored in Health."
           action={
             <div className="flex flex-wrap gap-3">
               <form action={generateOwnAiInsightAction}>

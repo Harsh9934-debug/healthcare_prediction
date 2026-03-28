@@ -71,7 +71,7 @@ export default async function InvitePage({
           <CardHeader>
             <div className="flex items-start justify-between gap-3">
               <div>
-                <CardTitle>VitaVault Invite</CardTitle>
+                <CardTitle>Health Invite</CardTitle>
                 <CardDescription className="mt-1">
                   You’ve been invited into a shared care-team workspace.
                 </CardDescription>
@@ -114,7 +114,7 @@ export default async function InvitePage({
             </div>
 
             <p className="text-xs text-muted-foreground">
-              Safety: this grant controls access to records inside VitaVault. It does not grant access to external systems.
+              Safety: this grant controls access to records inside Health. It does not grant access to external systems.
             </p>
           </CardContent>
         </Card>

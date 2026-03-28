@@ -165,7 +165,7 @@ export default async function DashboardPage() {
             <CardHeader>
               <CardTitle className="text-xl tracking-tight">Quick navigation</CardTitle>
               <CardDescription className="mt-1 text-sm leading-6">
-                Jump into the most operational areas of VitaVault.
+                Jump into the most operational areas of Health.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">

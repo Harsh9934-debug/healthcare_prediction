@@ -5,7 +5,7 @@ import { QUEUE_NAMES } from "@/lib/jobs/contracts";
 
 declare global {
   // eslint-disable-next-line no-var
-  var vitavaultQueues:
+  var healthQueues:
     | {
         alertsQueue?: Queue;
         remindersQueue?: Queue;
@@ -16,10 +16,10 @@ declare global {
 }
 
 function getStore() {
-  if (!globalThis.vitavaultQueues) {
-    globalThis.vitavaultQueues = {};
+  if (!globalThis.healthQueues) {
+    globalThis.healthQueues = {};
   }
-  return globalThis.vitavaultQueues;
+  return globalThis.healthQueues;
 }
 
 function defaultJobOptions() {

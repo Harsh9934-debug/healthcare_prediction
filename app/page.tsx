@@ -48,7 +48,7 @@ function Logo() {
         <HeartPulse className="h-6 w-6" />
       </div>
       <div>
-        <p className="text-2xl font-semibold tracking-tight">VitaVault</p>
+        <p className="text-2xl font-semibold tracking-tight">Health</p>
         <p className="text-sm text-muted-foreground">
           Personal Health Record Companion
         </p>
@@ -88,7 +88,7 @@ export default function HomePage() {
               </h1>
 
               <p className="max-w-3xl text-lg leading-8 text-muted-foreground sm:text-xl">
-                VitaVault gives patients a premium dashboard for medications,
+                Health gives patients a premium dashboard for medications,
                 appointments, labs, vitals, symptoms, documents, reminders, and
                 printable summaries.
               </p>
