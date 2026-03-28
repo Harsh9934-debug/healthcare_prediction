@@ -10,10 +10,8 @@ const initialState: AuthActionState = { error: null, success: null };
 function Logo() {
   return (
     <div className="text-center">
-      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-3xl bg-primary/10 text-primary">
-        <span className="text-xl font-bold">V</span>
-      </div>
-      <p className="mt-3 text-lg font-semibold tracking-tight">Health</p>
+      <img src="/logo.png" alt="Health Logo" className="mx-auto h-16 w-16 rounded-3xl object-cover shadow-sm" />
+      <p className="mt-4 text-lg font-semibold tracking-tight">Health</p>
       <p className="text-sm text-muted-foreground">Personal Health Record Companion</p>
     </div>
   );

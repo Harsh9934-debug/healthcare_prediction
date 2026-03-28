@@ -39,9 +39,9 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json({
-      biologicalAge: predictionObj.biologicalAge,
+      biologicalAge: aiInsights.biologicalAge || predictionObj.biologicalAge,
       riskLevel: predictionObj.riskLevel,
-      futurePrediction: predictionObj.futurePrediction,
+      futurePrediction: aiInsights.futurePrediction || predictionObj.futurePrediction,
       simulation: aiInsights.simulation,
       recommendations: aiInsights.recommendations,
     });

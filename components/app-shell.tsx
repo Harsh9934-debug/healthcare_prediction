@@ -171,9 +171,7 @@ export function AppShell({ children }: AppShellProps) {
                 collapsed ? "justify-center" : "gap-3"
               )}
             >
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-                <Sparkles className="h-5 w-5" />
-              </div>
+              <img src="/logo.png" alt="Health Logo" className="h-10 w-10 shrink-0 rounded-xl object-cover shadow-sm bg-white" />
 
               <AnimatePresence initial={false}>
                 {!collapsed ? (
@@ -309,8 +307,7 @@ export function AppShell({ children }: AppShellProps) {
               transition={{ duration: 0.18 }}
               className="mt-3 text-xs text-muted-foreground"
             >
-              Your workspace is authenticated and protected by server-side
-              checks.
+              Your workspace is authenticated
             </motion.p>
           ) : null}
         </AnimatePresence>

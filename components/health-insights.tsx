@@ -175,7 +175,7 @@ export function HealthInsights() {
           {loading && (
             <div className="flex h-full flex-col items-center justify-center">
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
-              <p className="mt-4 text-sm text-muted-foreground">Consulting Gemini AI...</p>
+              <p className="mt-4 text-sm text-muted-foreground">Consulting</p>
             </div>
           )}
           {results && !loading && (
