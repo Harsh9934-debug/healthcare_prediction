@@ -146,6 +146,7 @@ export function AppShell({ children }: AppShellProps) {
   const groups = useMemo(() => {
     return [
       { label: "Overview", items: primaryRoutes },
+      { label: "Account", items: utilityRoutes },
     ];
   }, []);
 

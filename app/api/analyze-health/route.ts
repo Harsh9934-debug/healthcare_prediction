@@ -27,8 +27,13 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { age, sleepHours, stepsPerDay, exerciseMinutes, stressLevel } = body;
+    const {
+      age, sleepHours, stepsPerDay, exerciseMinutes, stressLevel,
+      bmi, smokingStatus, alcoholUnitsPerWeek, dietQuality, hydrationLitres,
+      heartRate, systolicBP,
+    } = body;
 
+    // Validate required fields
     if (
       typeof age !== "number" ||
       typeof sleepHours !== "number" ||
@@ -42,44 +47,53 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Prediction (Mirror + Predictor)
-    const predictionObj = calculatePrediction({
-      age,
-      sleepHours,
-      stepsPerDay,
-      stressLevel,
-    });
+    // Local prediction fallback (Mirror + Risk)
+    const predictionObj = calculatePrediction({ age, sleepHours, stepsPerDay, stressLevel, bmi });
 
-    // AI logic (Time Machine + Coach)
+    // AI (Time Machine + Coach + Body Systems)
     const aiInsights = await generateAiInsights({
-      age,
-      sleepHours,
-      stepsPerDay,
-      exerciseMinutes,
-      stressLevel,
+      age, sleepHours, stepsPerDay, exerciseMinutes, stressLevel,
+      bmi, smokingStatus, alcoholUnitsPerWeek, dietQuality, hydrationLitres,
+      heartRate, systolicBP,
     });
 
     const responsePayload = {
       biologicalAge: aiInsights.biologicalAge || predictionObj.biologicalAge,
+      healthScore: aiInsights.healthScore ?? null,
       riskLevel: predictionObj.riskLevel,
       futurePrediction: aiInsights.futurePrediction || predictionObj.futurePrediction,
       simulation: aiInsights.simulation,
       recommendations: aiInsights.recommendations,
+      bodySystems: aiInsights.bodySystems ?? null,
+      habitLever: aiInsights.habitLever ?? null,
+      improvementImpact: aiInsights.improvementImpact ?? null,
     };
 
-    const session = await auth();
-    if (session?.user?.id) {
-      await db.aiPrediction.create({
-        data: {
-          userId: session.user.id,
-          biologicalAge: responsePayload.biologicalAge,
-          riskLevel: responsePayload.riskLevel,
-          futurePrediction: responsePayload.futurePrediction,
-          simulation: responsePayload.simulation,
-          recommendations: responsePayload.recommendations,
-          inputDataJson: JSON.stringify(body),
-        },
-      });
+    // Try to persist to DB — non-fatal, never blocks or crashes the response
+    try {
+      const session = await auth();
+      if (session?.user?.id) {
+        await db.aiPrediction.create({
+          data: {
+            userId: session.user.id,
+            biologicalAge: responsePayload.biologicalAge,
+            healthScore: responsePayload.healthScore,
+            riskLevel: responsePayload.riskLevel,
+            futurePrediction: responsePayload.futurePrediction,
+            simulation: responsePayload.simulation,
+            recommendations: responsePayload.recommendations,
+            habitLever: responsePayload.habitLever,
+            improvementImpact: responsePayload.improvementImpact,
+            bodySystems: responsePayload.bodySystems
+              ? JSON.stringify(responsePayload.bodySystems)
+              : null,
+            inputDataJson: JSON.stringify(body),
+          },
+        });
+      }
+    } catch (saveErr) {
+      // Log but don't block — AI result still returned to user
+      console.error("[analyze-health] Session/DB save error (non-fatal):", saveErr);
     }
 
     return NextResponse.json(responsePayload);

@@ -61,10 +61,14 @@ model AiPrediction {
   id               String   @id @default(auto()) @map("_id") @db.ObjectId
   userId           String   @db.ObjectId
   biologicalAge    Float
+  healthScore      Float?
   riskLevel        String
   futurePrediction String?
   simulation       String?
   recommendations  String?
+  habitLever       String?
+  improvementImpact String?
+  bodySystems      String?  // stored as JSON string
   inputDataJson    String?
   createdAt        DateTime @default(now())
 

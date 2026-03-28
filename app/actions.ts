@@ -1,14 +1,6 @@
 "use server";
 
 import bcrypt from "bcryptjs";
-import {
-  MedicationLogStatus,
-  type AppointmentStatus,
-  type DocumentType,
-  type LabFlag,
-  type MedicationStatus,
-  type SymptomSeverity,
-} from "@prisma/client";
 import { endOfDay, startOfDay } from "date-fns";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";

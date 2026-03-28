@@ -1,72 +1,134 @@
-export async function generateAiInsights({ age, sleepHours, stepsPerDay, exerciseMinutes, stressLevel }) {
+export async function generateAiInsights({
+  age, sleepHours, stepsPerDay, exerciseMinutes, stressLevel,
+  bmi, smokingStatus, alcoholUnitsPerWeek, dietQuality, hydrationLitres,
+  heartRate, systolicBP
+}) {
   try {
-    const prompt = `Act as the 'GoodAI Antigravity Engine,' a sophisticated biological age estimator and health future simulator[cite: 57, 58]. Your goal is to help the user avoid the 'Breakdown Trap' of reactive medicine[cite: 14, 18].
+    const prompt = `Act as the 'GoodAI Antigravity Engine' — a next-generation biological-age estimator, precision health-risk simulator, and longevity coach.
 
-### INPUT DATA:
-User Age: ${age}
-Sleep: ${sleepHours} hours
-Steps: ${stepsPerDay}
-Exercise: ${exerciseMinutes} mins
-Stress: ${stressLevel}/10
+### PATIENT INPUT DATA:
+- Chronological Age: ${age} years
+- Sleep: ${sleepHours} hours/night
+- Daily Steps: ${stepsPerDay}
+- Exercise: ${exerciseMinutes} min/day
+- Stress Level: ${stressLevel}/10
+- BMI: ${bmi ?? "unknown"}
+- Smoking: ${smokingStatus ?? "non-smoker"}
+- Alcohol: ${alcoholUnitsPerWeek ?? 0} units/week
+- Diet Quality (1-10): ${dietQuality ?? 5}
+- Hydration: ${hydrationLitres ?? 2} litres/day
+- Resting Heart Rate: ${heartRate ?? "unknown"} bpm
+- Systolic Blood Pressure: ${systolicBP ?? "unknown"} mmHg
 
-### LOGIC CONSTRAINTS:
-1. THE MIRROR (Biological Age): Use the input to calculate a biological age by mathematically scaling extreme habits[cite: 57]. 
-   - Baseline is chronological age.
-   - Sleep Penalties: Add +2.5 years penalty for EVERY hour of sleep below 7 (e.g., 2 hours = 5 hours deficit = +12.5 years).
-   - Stress Penalties: Add +1.5 years penalty for EVERY stress point above 5 (e.g., 10 stress = 5 points over = +7.5 years).
-   - Activity Bonuses/Penalties: -1 year for steps > 8,000; -0.5 years for daily exercise > 30 mins. Add +1.5 years penalty for every 1000 steps below 5000.
-2. THE TIME MACHINE (2040 Projection): Predict health status in 2040 if current habits persist[cite: 59, 77]. 
-3. THE GROWTH SIMULATION: Identify ONE habit to change (e.g., +1 hour sleep). Recalculate the 2040 projection to show a "Reduced Risk"[cite: 52, 80].
-4. THE COACH: Provide 3 'Micro-Commitments' that are clear, actionable, and personal[cite: 61, 83].
+### CALCULATION LOGIC:
+1. BIOLOGICAL AGE: Start at chronological age. Apply cumulative adjustments:
+   - Sleep < 7h: +2.5 yrs per missing hour
+   - Stress > 5: +1.5 yrs per point above 5
+   - Steps < 5000: +1.5 yrs per missing 1000 steps; steps > 8000: -1 yr
+   - Exercise > 30 min/day: -0.5 yrs
+   - BMI: if >30 add +4, if >25 add +2, if 18.5–24.9 no change, if <18.5 add +1.5
+   - Smoking: active smoker +6 yrs; ex-smoker +2 yrs
+   - Alcohol >14 units/week: +3 yrs; 8–14 units: +1.5 yrs
+   - Diet quality <4: +3 yrs; 4–6: +1 yr; 7–9: -0.5 yrs; 10: -1.5 yrs
+   - Hydration <1.5L: +1 yr
+   - Resting HR if known: >90 bpm +2, 70–90 +0, <60 -1
+   - Systolic BP if known: >140 +3, 130–140 +1.5, <120 -0.5
 
-### OUTPUT FORMAT (JSON ONLY):
+2. BODY SYSTEM RISK SCORES (0–100): Rate independently:
+   - Cardiovascular (heart, vessels)
+   - Metabolic (insulin sensitivity, weight)
+   - Neurological (cognitive, stress load)
+   - Musculoskeletal (mobility, joints)
+   - Immune & Inflammation
+
+3. HEALTH SCORE (0–100): Overall wellness composite.
+
+4. 2040 DOWNSIDE: 2 vivid cautionary sentences if habits persist.
+
+5. 2040 UPSIDE: 2 inspiring sentences after ONE habit improvement.
+
+6. HABIT LEVER: The single highest-impact habit to change.
+
+7. MICRO-COMMITMENTS: 3 specific, actionable daily habits with expected improvement percentage.
+
+8. IMPROVEMENT IMPACT: Percentage reduction in 10-year cardiometabolic risk from the habit lever.
+
+### OUTPUT FORMAT — JSON ONLY (no markdown, no backticks):
 {
   "biological_age": number,
-  "age_summary": "A clear, empathetic medical explanation describing exactly WHY the biological age is elevated, focusing on the physiological breakdown caused by their worst habits (e.g., 'Your massive sleep deficit prevents critical cellular repair, while unchecked core stress accelerates tissue inflammation. Together, these force your biological clock to age 27 years faster than normal.')",
-  "the_down_2040": "A vivid, cautionary 2-sentence description of health risks if habits don't change",
-  "the_growth_2040": "A vivid, inspiring 2-sentence description of the future after 1 habit change",
-  "improvement_impact": "Percentage reduction in long-term heart/metabolic risk",
+  "health_score": number,
+  "age_summary": "string — empathetic clinical explanation of why biological age differs from chronological, max 2 sentences",
+  "body_systems": {
+    "cardiovascular": number,
+    "metabolic": number,
+    "neurological": number,
+    "musculoskeletal": number,
+    "immune": number
+  },
+  "the_down_2040": "string",
+  "the_growth_2040": "string",
+  "habit_lever": "string — name of the single best habit to change",
+  "improvement_impact": "string — e.g. '23% reduction in 10-year heart disease risk'",
   "action_plan": ["Action 1", "Action 2", "Action 3"]
 }`;
 
-    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }]
-      }),
-    });
+    const res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }),
+      }
+    );
 
     if (!res.ok) {
       console.error("Gemini API Error:", await res.text());
-      return { 
-        biologicalAge: age,
-        futurePrediction: "Unable to calculate future prediction at this time.",
-        simulation: "Unable to generate simulation at this time.", 
-        recommendations: "Unable to fetch AI recommendations." 
-      };
+      return fallback(age);
     }
 
     const data = await res.json();
     let text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
-    
-    // Clean markdown if AI accidentally included it
     text = text.replace(/```json/g, "").replace(/```/g, "").trim();
-    
-    const result = JSON.parse(text);
+
+    let result;
+    try {
+      result = JSON.parse(text);
+    } catch {
+      console.error("JSON parse error from Gemini:", text.slice(0, 300));
+      return fallback(age);
+    }
+
     return {
-      biologicalAge: result.biological_age || age,
-      futurePrediction: result.age_summary ? `[${result.age_summary}] ${result.the_down_2040}` : result.the_down_2040,
-      simulation: `${result.the_growth_2040}\n\nMetrics Impact: ${result.improvement_impact}`,
-      recommendations: Array.isArray(result.action_plan) ? result.action_plan.join('\n') : result.action_plan
+      biologicalAge: result.biological_age ?? age,
+      healthScore: result.health_score ?? 50,
+      ageSummary: result.age_summary ?? "",
+      bodySystems: result.body_systems ?? null,
+      futurePrediction: result.age_summary
+        ? `${result.age_summary} ${result.the_down_2040}`
+        : result.the_down_2040,
+      simulation: `${result.the_growth_2040}\n\n💡 Best habit to change: ${result.habit_lever}\n📊 Impact: ${result.improvement_impact}`,
+      recommendations: Array.isArray(result.action_plan)
+        ? result.action_plan.join("\n")
+        : result.action_plan,
+      habitLever: result.habit_lever,
+      improvementImpact: result.improvement_impact,
     };
   } catch (err) {
     console.error("AI Service Error:", err);
-    return {
-      biologicalAge: age,
-      futurePrediction: "Error analyzing long-term risks.",
-      simulation: "Error generating simulation.",
-      recommendations: "Error generating recommendations."
-    };
+    return fallback(age);
   }
+}
+
+function fallback(age) {
+  return {
+    biologicalAge: age,
+    healthScore: 50,
+    ageSummary: "",
+    bodySystems: null,
+    futurePrediction: "Unable to generate prediction at this time.",
+    simulation: "Unable to generate simulation at this time.",
+    recommendations: "Unable to fetch AI recommendations.",
+    habitLever: null,
+    improvementImpact: null,
+  };
 }
