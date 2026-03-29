@@ -2,32 +2,10 @@
 
 import { useState, useEffect } from "react";
 import {
-  Sparkles, Loader2, Activity, TrendingDown, Share2,
-  Heart, Brain, Zap, Dumbbell, Shield, Target
+  Sparkles, Loader2, Activity, TrendingDown, Share2, Target
 } from "lucide-react";
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, RadarChart, Radar, PolarGrid, PolarAngleAxis } from "recharts";
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, AreaChart, Area } from "recharts";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui";
-
-function BodySystemsRadar({ systems }: { systems: Record<string, number> }) {
-  const data = [
-    { subject: "Cardio", value: systems.cardiovascular ?? 50, fullMark: 100 },
-    { subject: "Metabolic", value: systems.metabolic ?? 50, fullMark: 100 },
-    { subject: "Neurological", value: systems.neurological ?? 50, fullMark: 100 },
-    { subject: "Musculo.", value: systems.musculoskeletal ?? 50, fullMark: 100 },
-    { subject: "Immune", value: systems.immune ?? 50, fullMark: 100 },
-  ];
-  return (
-    <div className="h-52 w-full">
-      <ResponsiveContainer width="100%" height="100%">
-        <RadarChart cx="50%" cy="50%" outerRadius="70%" data={data}>
-          <PolarGrid stroke="rgba(100,116,139,0.2)" />
-          <PolarAngleAxis dataKey="subject" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} />
-          <Radar name="Health" dataKey="value" stroke="#3b82f6" fill="#3b82f6" fillOpacity={0.25} strokeWidth={2} />
-        </RadarChart>
-      </ResponsiveContainer>
-    </div>
-  );
-}
 
 function HealthScoreRing({ score }: { score: number }) {
   const color = score >= 70 ? "#10b981" : score >= 45 ? "#f59e0b" : "#f43f5e";
@@ -51,7 +29,7 @@ function HealthScoreRing({ score }: { score: number }) {
 const INPUT_FIELD = "flex h-10 w-full rounded-xl border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring";
 
 export function HealthInsights() {
-  const [step, setStep] = useState(0); // 0=basic, 1=lifestyle, 2=vitals
+  const [step, setStep] = useState(0);
   const [form, setForm] = useState({
     age: "35", sleepHours: "6", stepsPerDay: "5000",
     exerciseMinutes: "30", stressLevel: "5",
@@ -115,7 +93,7 @@ export function HealthInsights() {
 
   const handleWhatsAppShare = () => {
     if (!results) return;
-    const text = `🧬 GoodAI Longevity Report\n\nBiological Age: ${results.biologicalAge}\nHealth Score: ${results.healthScore ?? "N/A"}/100\nRisk Level: ${results.riskLevel}\n\nFocus Habit: ${results.habitLever ?? "N/A"}\nEstimated Impact: ${results.improvementImpact ?? "N/A"}\n\nMy Action Plan:\n${results.recommendations}\n\nGenerated via AI Longevity Lab`;
+    const text = `GoodAI Longevity Report\n\nBiological Age: ${results.biologicalAge}\nHealth Score: ${results.healthScore ?? "N/A"}/100\nRisk Level: ${results.riskLevel}\n\nFocus Habit: ${results.habitLever ?? "N/A"}\nEstimated Impact: ${results.improvementImpact ?? "N/A"}\n\nMy Action Plan:\n${results.recommendations}\n\nGenerated via AI Longevity Lab`;
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank");
   };
 
@@ -130,7 +108,6 @@ export function HealthInsights() {
             <Activity className="h-5 w-5" /> Health Tracker
           </CardTitle>
           <CardDescription>Complete all steps for the most accurate AI analysis.</CardDescription>
-          {/* Step indicator */}
           <div className="flex gap-2 pt-2">
             {steps.map((s, i) => (
               <button key={s} type="button" onClick={() => setStep(i)}
@@ -152,7 +129,7 @@ export function HealthInsights() {
                   { label: "Stress Level (0–10)", name: "stressLevel", type: "number", min: "0", max: "10" },
                   { label: "BMI", name: "bmi", type: "number", min: "10", max: "60", step: "0.1" },
                 ].map(({ label, name, ...rest }) => (
-                  <div key={name} className={`space-y-1 ${name === "stressLevel" ? "" : ""}`}>
+                  <div key={name} className="space-y-1">
                     <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">{label}</label>
                     <input name={name} value={(form as any)[name]} onChange={handleChange}
                       className={INPUT_FIELD} {...rest} />
@@ -165,8 +142,7 @@ export function HealthInsights() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Smoking Status</label>
-                  <select name="smokingStatus" value={form.smokingStatus} onChange={handleChange}
-                    className={INPUT_FIELD}>
+                  <select name="smokingStatus" value={form.smokingStatus} onChange={handleChange} className={INPUT_FIELD}>
                     <option value="non-smoker">Non-smoker</option>
                     <option value="ex-smoker">Ex-smoker</option>
                     <option value="active smoker">Active smoker</option>
@@ -199,7 +175,7 @@ export function HealthInsights() {
                 </div>
                 <div className="col-span-2 rounded-2xl bg-blue-500/5 border border-blue-500/20 p-4">
                   <p className="text-xs text-blue-600 dark:text-blue-400 font-medium">
-                    💡 Vitals are optional but improve prediction precision significantly. Skip if you don't have recent readings.
+                    Vitals are optional but improve prediction precision significantly. Skip if you don't have recent readings.
                   </p>
                 </div>
               </div>
@@ -236,7 +212,7 @@ export function HealthInsights() {
           <CardTitle className="flex items-center gap-2 text-xl tracking-tight">
             <Sparkles className="h-5 w-5 text-primary" /> AI Health Insights
           </CardTitle>
-          <CardDescription>Biological age, body systems, future projection & action plan.</CardDescription>
+          <CardDescription>Biological age, future projection & personalised action plan.</CardDescription>
         </CardHeader>
         <CardContent className="flex-1 p-6 overflow-y-auto">
           {!results && !loading && (
@@ -268,31 +244,6 @@ export function HealthInsights() {
                 </div>
               </div>
 
-              {/* Body Systems Radar */}
-              {results.bodySystems && (
-                <div className="rounded-3xl border border-border/50 bg-background p-5 shadow-sm">
-                  <h4 className="flex items-center gap-2 text-sm font-semibold tracking-tight mb-3">
-                    <Shield className="h-4 w-4 text-blue-500" /> Body Systems Assessment
-                  </h4>
-                  <BodySystemsRadar systems={results.bodySystems} />
-                  <div className="grid grid-cols-5 gap-2 mt-3">
-                    {[
-                      { key: "cardiovascular", label: "Cardio", icon: Heart, color: "text-rose-500" },
-                      { key: "metabolic", label: "Metabolic", icon: Zap, color: "text-amber-500" },
-                      { key: "neurological", label: "Neuro", icon: Brain, color: "text-purple-500" },
-                      { key: "musculoskeletal", label: "Muscles", icon: Dumbbell, color: "text-blue-500" },
-                      { key: "immune", label: "Immune", icon: Shield, color: "text-emerald-500" },
-                    ].map(({ key, label, icon: Icon, color }) => (
-                      <div key={key} className="flex flex-col items-center gap-1">
-                        <Icon className={`h-4 w-4 ${color}`} />
-                        <p className="text-[10px] text-muted-foreground font-medium">{label}</p>
-                        <p className="text-xs font-bold">{results.bodySystems[key]}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
               {/* History Chart */}
               {history.length > 1 && (
                 <div className="rounded-3xl border border-border/50 bg-background p-5 shadow-sm">
@@ -303,10 +254,10 @@ export function HealthInsights() {
                     <ResponsiveContainer width="100%" height="100%">
                       <LineChart data={history.map(h => ({
                         date: new Date(h.createdAt).toLocaleDateString([], { month: "short", day: "numeric" }),
-                        Age: h.biologicalAge, Score: h.healthScore,
+                        Age: h.biologicalAge,
                       }))} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
-                        <XAxis dataKey="date" fontSize={11} tickLine={false} axisLine={false} stroke="#888888" />
-                        <YAxis domain={["auto", "auto"]} fontSize={11} tickLine={false} axisLine={false} stroke="#888888" />
+                        <XAxis dataKey="date" fontSize={11} tickLine={false} axisLine={false} />
+                        <YAxis domain={["auto", "auto"]} fontSize={11} tickLine={false} axisLine={false} />
                         <Tooltip contentStyle={{ borderRadius: "12px", border: "1px solid #eaeaea", fontSize: "12px" }} />
                         <Line type="stepAfter" dataKey="Age" stroke="#3b82f6" strokeWidth={2.5} dot={{ r: 3, fill: "#3b82f6" }} activeDot={{ r: 5 }} />
                       </LineChart>
@@ -323,7 +274,7 @@ export function HealthInsights() {
                   </h4>
                   <p className="text-sm font-medium">{results.habitLever}</p>
                   {results.improvementImpact && (
-                    <p className="text-xs text-muted-foreground mt-1">📊 {results.improvementImpact}</p>
+                    <p className="text-xs text-muted-foreground mt-1">{results.improvementImpact}</p>
                   )}
                 </div>
               )}

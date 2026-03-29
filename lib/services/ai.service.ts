@@ -19,9 +19,7 @@ export interface RecommendationContext {
   heartRateHigh: boolean;
 }
 
-/**
- * Generate a personalized AI recommendation string
- */
+
 export function generateRecommendation(input: HealthInput, ctx: RecommendationContext): string {
   const lines: string[] = [];
 
@@ -53,13 +51,13 @@ export function generateRecommendation(input: HealthInput, ctx: RecommendationCo
   if (ctx.activityDeficit) {
     const stepGap = 8000 - input.steps;
     lines.push(
-      `🚶 **Activity**: ${input.steps.toLocaleString()} steps/day is below the 8,000-step longevity threshold. ` +
+      `**Activity**: ${input.steps.toLocaleString()} steps/day is below the 8,000-step longevity threshold. ` +
         `Each additional 1,000 steps reduces all-cause mortality risk by ~6%. ` +
         `Add a 20-min brisk walk after lunch — this alone can close ${Math.round(stepGap / 100) * 100} of your ${stepGap.toLocaleString()}-step gap.`
     );
   } else {
     lines.push(
-      `🚶 **Activity**: Excellent — ${input.steps.toLocaleString()} steps/day puts you in the top performance tier. Consider adding 2 sessions of resistance training per week to further reduce metabolic risk.`
+      `**Activity**: Excellent — ${input.steps.toLocaleString()} steps/day puts you in the top performance tier. Consider adding 2 sessions of resistance training per week to further reduce metabolic risk.`
     );
   }
 
@@ -82,12 +80,12 @@ export function generateRecommendation(input: HealthInput, ctx: RecommendationCo
   // --- Biological age delta ---
   if (ctx.ageDelta > 0) {
     lines.push(
-      `🧬 **Biological Age**: Your lifestyle is ageing you ~${ctx.ageDelta} year(s) faster than your chronological age. ` +
+      `**Biological Age**: Your lifestyle is ageing you ~${ctx.ageDelta} year(s) faster than your chronological age. ` +
         `The good news: biological age is highly modifiable. Consistent sleep improvement and regular activity can reverse this gap in 3–6 months.`
     );
   } else {
     lines.push(
-      `🧬 **Biological Age**: Your habits are performing at or below your chronological age — you're biologically younger than your birth certificate says!`
+      `**Biological Age**: Your habits are performing at or below your chronological age — you're biologically younger than your birth certificate says!`
     );
   }
 

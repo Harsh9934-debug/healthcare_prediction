@@ -108,7 +108,7 @@ export default async function ProfilePage() {
                   <p className="text-[10px] uppercase tracking-widest text-emerald-600 font-semibold mb-1">Top Habit to Change</p>
                   <p className="text-sm font-medium">{latestPrediction.habitLever}</p>
                   {latestPrediction.improvementImpact && (
-                    <p className="text-xs text-muted-foreground mt-0.5">📊 {latestPrediction.improvementImpact}</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">{latestPrediction.improvementImpact}</p>
                   )}
                 </div>
               )}

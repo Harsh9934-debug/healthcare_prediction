@@ -33,7 +33,6 @@ export async function POST(req: NextRequest) {
       heartRate, systolicBP,
     } = body;
 
-    // Validate required fields
     if (
       typeof age !== "number" ||
       typeof sleepHours !== "number" ||
@@ -47,10 +46,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Local prediction fallback (Mirror + Risk)
     const predictionObj = calculatePrediction({ age, sleepHours, stepsPerDay, stressLevel, bmi });
 
-    // AI (Time Machine + Coach + Body Systems)
     const aiInsights = await generateAiInsights({
       age, sleepHours, stepsPerDay, exerciseMinutes, stressLevel,
       bmi, smokingStatus, alcoholUnitsPerWeek, dietQuality, hydrationLitres,
@@ -64,12 +61,11 @@ export async function POST(req: NextRequest) {
       futurePrediction: aiInsights.futurePrediction || predictionObj.futurePrediction,
       simulation: aiInsights.simulation,
       recommendations: aiInsights.recommendations,
-      bodySystems: aiInsights.bodySystems ?? null,
       habitLever: aiInsights.habitLever ?? null,
       improvementImpact: aiInsights.improvementImpact ?? null,
     };
 
-    // Try to persist to DB — non-fatal, never blocks or crashes the response
+    // Try to persist — non-fatal, never blocks the response
     try {
       const session = await auth();
       if (session?.user?.id) {
@@ -84,15 +80,11 @@ export async function POST(req: NextRequest) {
             recommendations: responsePayload.recommendations,
             habitLever: responsePayload.habitLever,
             improvementImpact: responsePayload.improvementImpact,
-            bodySystems: responsePayload.bodySystems
-              ? JSON.stringify(responsePayload.bodySystems)
-              : null,
             inputDataJson: JSON.stringify(body),
           },
         });
       }
     } catch (saveErr) {
-      // Log but don't block — AI result still returned to user
       console.error("[analyze-health] Session/DB save error (non-fatal):", saveErr);
     }
 

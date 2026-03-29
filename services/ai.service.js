@@ -34,37 +34,23 @@ export async function generateAiInsights({
    - Resting HR if known: >90 bpm +2, 70–90 +0, <60 -1
    - Systolic BP if known: >140 +3, 130–140 +1.5, <120 -0.5
 
-2. BODY SYSTEM RISK SCORES (0–100): Rate independently:
-   - Cardiovascular (heart, vessels)
-   - Metabolic (insulin sensitivity, weight)
-   - Neurological (cognitive, stress load)
-   - Musculoskeletal (mobility, joints)
-   - Immune & Inflammation
+2. HEALTH SCORE (0–100): Overall wellness composite based on all inputs.
 
-3. HEALTH SCORE (0–100): Overall wellness composite.
+3. 2040 DOWNSIDE: 2 vivid cautionary sentences if habits persist.
 
-4. 2040 DOWNSIDE: 2 vivid cautionary sentences if habits persist.
+4. 2040 UPSIDE: 2 inspiring sentences after ONE habit improvement.
 
-5. 2040 UPSIDE: 2 inspiring sentences after ONE habit improvement.
+5. HABIT LEVER: The single highest-impact habit to change.
 
-6. HABIT LEVER: The single highest-impact habit to change.
+6. MICRO-COMMITMENTS: 3 specific, actionable daily habits with expected improvement percentage.
 
-7. MICRO-COMMITMENTS: 3 specific, actionable daily habits with expected improvement percentage.
-
-8. IMPROVEMENT IMPACT: Percentage reduction in 10-year cardiometabolic risk from the habit lever.
+7. IMPROVEMENT IMPACT: Percentage reduction in 10-year cardiometabolic risk from the habit lever.
 
 ### OUTPUT FORMAT — JSON ONLY (no markdown, no backticks):
 {
   "biological_age": number,
   "health_score": number,
   "age_summary": "string — empathetic clinical explanation of why biological age differs from chronological, max 2 sentences",
-  "body_systems": {
-    "cardiovascular": number,
-    "metabolic": number,
-    "neurological": number,
-    "musculoskeletal": number,
-    "immune": number
-  },
   "the_down_2040": "string",
   "the_growth_2040": "string",
   "habit_lever": "string — name of the single best habit to change",
@@ -101,12 +87,10 @@ export async function generateAiInsights({
     return {
       biologicalAge: result.biological_age ?? age,
       healthScore: result.health_score ?? 50,
-      ageSummary: result.age_summary ?? "",
-      bodySystems: result.body_systems ?? null,
       futurePrediction: result.age_summary
         ? `${result.age_summary} ${result.the_down_2040}`
         : result.the_down_2040,
-      simulation: `${result.the_growth_2040}\n\n💡 Best habit to change: ${result.habit_lever}\n📊 Impact: ${result.improvement_impact}`,
+      simulation: `${result.the_growth_2040}\n\nBest habit to change: ${result.habit_lever}\nImpact: ${result.improvement_impact}`,
       recommendations: Array.isArray(result.action_plan)
         ? result.action_plan.join("\n")
         : result.action_plan,
@@ -123,8 +107,6 @@ function fallback(age) {
   return {
     biologicalAge: age,
     healthScore: 50,
-    ageSummary: "",
-    bodySystems: null,
     futurePrediction: "Unable to generate prediction at this time.",
     simulation: "Unable to generate simulation at this time.",
     recommendations: "Unable to fetch AI recommendations.",

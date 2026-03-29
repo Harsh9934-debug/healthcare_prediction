@@ -68,7 +68,6 @@ model AiPrediction {
   recommendations  String?
   habitLever       String?
   improvementImpact String?
-  bodySystems      String?  // stored as JSON string
   inputDataJson    String?
   createdAt        DateTime @default(now())
 
